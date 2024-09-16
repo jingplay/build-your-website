@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode }}">
+  <head>
+    {{- partial "indent.html" (slice 4 (partial "head.html" .)) }}
+  </head>
+  <body>
+    <div class="flex flex-col min-h-screen">
+      <header class="page-header z-50 flex-none md:relative bg-gray-50 border-b drop-shadow-md">
+        {{- partial "indent.html" (slice 8 (partial "header.html" .)) }}
+        {{- partial "indent.html" (slice 8 (partial "nav_tree.html" .)) }}
+      </header>
+      {{- if .Params.FullScreen }}
+      <main class="grow">
+      {{- else }}
+      <main class="grow play-container">
+      {{- end }}
+        {{- if not .IsHome }}{{- partial "indent.html" (slice 8 (partial "nav_path.html" .)) }}{{- end }}
+        {{- block "main" . }}{{ end }}
+      </main>
+      <footer class="flex-none border-t drop-shadow-md">
+        {{- partial "indent.html" (slice 8 (partial "footer.html" .)) }}
+      </footer>
+    </div>
+    <div class="nav-mask z-40 hidden absolute top-0 bottom-0 left-0 right-0"></div>
+    <button class="move-top z-30 hidden fixed bottom-12 right-5 w-10 h-10 border border-gray-900 rounded-full bg-transparent">
+      <img src="{{ `images/arrow-up.svg` | relURL }}">
+    </button>
+    <script src="{{ `js/app.js` | relURL }}"></script>
+  </body>
+</html>

@@ -1,0 +1,26 @@
+{{- $url := default "#" (.Get "url") }}
+
+{{- $style := slice }}
+{{- with .Get "text-color" }} {{- $style = $style | append (printf `color:%s;` .) }} {{- end }}
+{{- with .Get "fill-color" }} {{- $style = $style | append (printf `background-color:%s;` .) }} {{- end }}
+
+{{- with default "1px" (.Get "border-width") }}
+  {{- $style = $style | append (printf `border-width:%s;` .) }}
+{{- end }}
+
+{{- with default "black" (.Get "border-color") }}
+  {{- $style = $style | append (printf `border-color:%s;` .) }}
+{{- end }}
+
+{{- with default "1.25rem" (.Get "margin") -}}
+  {{- $style = $style | append (printf `margin:%s;` .) }}
+{{- end }}
+
+{{- with default "0.25rem 0.75rem" (.Get "padding") -}}
+  {{- $style = $style | append (printf `padding:%s;` .) }}
+{{- end }}
+
+<a href="{{ $url | relLangURL }}" class="not-prose play-button"
+  {{- with $style }} style="{{ delimit . `` | safeCSS }}" {{- end }}>
+  {{- .Inner -}}
+</a>

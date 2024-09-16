@@ -1,0 +1,16 @@
+{{- $title := printf "%s - %s" .Site.Title .Title -}}
+
+<meta charset="utf-8">
+<title>{{ $title }}</title>
+<meta name="description" content="{{ default .Site.Params.description .Description }}">
+<meta name="keywords" content="{{ default .Site.Params.Keywords .Keywords }}">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="author" content="{{ .Site.Params.Author }}">
+<link rel="icon" type="image/x-icon" href="{{ printf `images/%s` .Site.Params.SiteLogo | relURL }}">
+
+{{- with .Resources.GetMatch "custom.css" }}
+<link rel="stylesheet" href="{{ . }}">
+{{- end }}
+
+<link rel="stylesheet" href="{{ `css/app.css` | relURL }}">
+{{ template "_internal/google_analytics.html" . }}

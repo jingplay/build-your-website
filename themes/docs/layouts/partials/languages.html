@@ -1,0 +1,18 @@
+{{- $lang := .Site.Language.Lang }}
+{{- $name := .Site.Language.LanguageName }}
+
+{{- if .IsTranslated }}
+<div class="languages flex-none relative">
+  <div class="flex">
+    <img src="/images/{{ $lang }}.svg" class="h-5" title="{{ $name }} - {{ upper $lang }}">
+    <img src="/images/arrow-down.svg" class="h-5 ml-1">
+  </div>
+  <div class="menu hidden absolute py-1 right-0 min-w-32 border rounded bg-gray-50">
+    {{- range .AllTranslations }}
+    <a href="{{ .RelPermalink }}" class="inline-block w-full pl-2 mb-1 text-gray-900 text-sm hover:text-white hover:bg-blue-700">
+    {{- printf "%s - %s" (upper .Site.Language.Lang) .Site.Language.LanguageName | safeHTML -}}
+    </a>
+    {{- end -}}
+  </div>
+</div>
+{{- end }}

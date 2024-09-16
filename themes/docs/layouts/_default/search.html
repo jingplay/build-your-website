@@ -1,0 +1,21 @@
+{{- define "main" }}
+        <div class="prose !max-w-none">
+          <div class="w-full flex justify-center items-center pt-5">
+            <input type="text" id="search-field" class="bg-gray-50 border border-gray-300 text-lg text-gray-900 rounded-md focus:bg-white focus:outline-0 block w-full max-w-3xl ps-5 py-1" placeholder="{{ i18n "search" }} ..." required />
+          </div>
+          {{ .Content }}
+          <div id="search-output" class="mt-10 p-2 border-t"></div>
+        </div>
+        <script src="https://unpkg.com/lunr/lunr.js"></script>
+        <script src="https://unpkg.com/axios/dist/axios.js"></script>
+        <script src="{{ `js/search.js` | relURL }}"></script>
+        <script>
+          searchApp.source = '{{ "search/index.json" | relLangURL }}'
+          searchApp.messages = {
+            'loading': {{ i18n "search-loading" }},
+            'ready': {{ i18n "search-ready" }},
+            'nothing-found': {{ i18n "nothing-found" }},
+            'invalid-input': {{ i18n "invalid-input" }}
+          }
+        </script>
+{{- end }}

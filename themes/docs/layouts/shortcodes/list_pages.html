@@ -1,0 +1,12 @@
+{{- $pages := partial "regular_pages.html" .Site.Home }}
+
+{{- with .Get "count" }}
+  {{- $pages = first . $pages }}
+{{- end }}
+
+<h2>{{ .Get "title" }}</h2>
+
+{{- range $pages }}
+<h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+<p><span class="text-sm italic">[ {{ .Params.Date | time.Format ":date_long" }} ]</span> {{ .Summary | plainify }}</p>
+{{- end }}

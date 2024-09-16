@@ -1,0 +1,71 @@
+{{- with .Get "flex" }}
+  {{- if not (in (slice "row" "col") .) }}
+    {{- errorf `Invalid param flex="%s" (row | col)` . }}
+  {{- end }}
+{{- end }}
+
+{{- $justify := .Get "justify" }}
+{{- with $justify }}
+  {{- if not (in (slice "start" "center" "end") .) }}
+    {{- errorf `Invalid param justify="%s" (start | center | end)` . }}
+  {{- end }}
+{{- end }}
+
+{{- $align := .Get "align" }}
+{{- with $align }}
+  {{- if not (in (slice "start" "center" "end") .) }}
+    {{- errorf `Invalid param align="%s" (start | center | end)` . }}
+  {{- end }}
+{{- end }}
+
+{{- with .Get "grow" }}
+  {{- if not (in (slice "0" "1") .) }}
+    {{- errorf `Invalid param grow="%s" (0 | 1)` . }}
+  {{- end }}
+{{- end }}
+
+{{- with .Get "text-align" }}
+  {{- if not (in (slice "left" "center" "right") .) }}
+    {{- errorf `Invalid param text-align="%s" (left | center | right)` . }}
+  {{- end }}
+{{- end }}
+
+{{- with .Get "container" }}
+  {{- if not (in (slice "yes" "no") .) }}
+    {{- errorf `Invalid param container="%s" (yes | no)` . }}
+  {{- end }}
+{{- end }}
+
+{{- $class := slice }}
+{{- with .Get "container" }} {{- $class = $class | append "play-container" }} {{- end }}
+{{- with .Get "flex" }}
+  {{- $class = $class | append (printf "flex-section %s-section" .) }}
+  {{- with $justify }} {{- $class = $class | append (printf "section-justify-%s" .) }} {{- end }}
+  {{- with $align }} {{- $class = $class | append (printf "section-items-%s" .) }} {{- end }}
+{{- end }}
+{{- with .Get "grow" }} {{- $class = $class | append (printf "section-grow-%s" .) }} {{- end }}
+{{- with .Get "bg-image" }} {{- $class = $class | append "section-bg-image" }} {{- end }}
+
+{{- $style := slice }}
+{{- with .Get "width" }} {{- $style = $style | append (printf "width:%s;" .) }} {{- end }}
+{{- with .Get "height" }} {{- $style = $style | append (printf "height:%s;" .) }} {{- end }}
+{{- with .Get "bg-image" }} {{- $style = $style | append (printf "background-image:url(%s);" .) }} {{- end }}
+{{- with .Get "bg-color" -}} {{- $style = $style | append (printf "background-color:%s;" .) }} {{- end }}
+{{- with .Get "opacity" -}} {{- $style = $style | append (printf "opacity:%s;" .) }} {{- end }}
+{{- with .Get "margin" -}} {{- $style = $style | append (printf "margin:%s;" .) }} {{- end }}
+{{- with .Get "padding" -}} {{- $style = $style | append (printf "padding:%s;" .) }} {{- end }}
+{{- with .Get "text-align" -}} {{- $style = $style | append (printf "text-align:%s;" .) }} {{- end }}
+{{- with .Get "position" -}} {{- $style = $style | append (printf "position:%s;" .) }} {{- end }}
+{{- with .Get "left" -}} {{- $style = $style | append (printf "left:%s;" .) }} {{- end }}
+{{- with .Get "right" -}} {{- $style = $style | append (printf "right:%s;" .) }} {{- end }}
+{{- with .Get "top" -}} {{- $style = $style | append (printf "top:%s;" .) }} {{- end }}
+{{- with .Get "bottom" -}} {{- $style = $style | append (printf "bottom:%s;" .) }} {{- end }}
+
+{{- $tag := default "div" (.Get "tag") }}
+
+{{- printf `%s%s` "<" $tag | safeHTML }}
+  {{- with .Get "id" }} id="{{ . }}" {{- end }}
+  {{- with $class }} class="{{ delimit $class ` ` }}" {{- end }}
+  {{- with $style }} style="{{ delimit $style `` | safeCSS }}" {{- end }}>
+  {{- .Inner }}
+{{- printf `%s%s%s` "</" $tag ">" | safeHTML }}

@@ -1,0 +1,29 @@
+{{- $enabled := true }}
+
+{{- $indent := index . 0 }}
+{{- $content := index . 1 }}
+
+{{- if $enabled }}
+  {{- $skip := false }}
+
+  {{- range (split $content "\n") }}
+    {{- if (ne (len .) 0) }}
+      {{- if $skip }}
+        {{- printf "\n%s" . | safeHTML }}
+        {{- if (strings.Contains . "</pre>") }}
+          {{- $skip = false }}
+        {{- end }}
+      {{- else }}
+        {{- if (strings.Contains . "<pre") }}
+          {{- $skip = true }}
+        {{- end }}
+        {{- printf "\n%s%s" (strings.Repeat $indent " ") . | safeHTML}}
+      {{- end }}
+    {{- end }}
+  {{- end }}
+
+{{- else }}
+
+{{- $content }}
+
+{{- end }}
