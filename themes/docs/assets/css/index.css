@@ -1,0 +1,169 @@
+@tailwind base;
+@tailwind utilities;
+@tailwind components;
+
+@layer base {
+  html {
+    font-family: "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+  }
+}
+
+.play-container {
+  @apply container lg:max-w-screen-lg mx-auto p-5;
+}
+
+/* Styles for pagination */
+ul.pagination {
+  @apply list-none flex items-center mt-20 px-0;
+}
+
+li.page-item {
+  @apply text-center border-y border-l px-0;
+}
+
+li.page-item:last-child {
+  @apply border-r;
+}
+
+li.page-item + li.page-item {
+  @apply m-0;
+}
+
+.page-link {
+  @apply inline-block px-2;
+}
+
+li.page-item.disabled .page-link {
+  @apply text-gray-900 pointer-events-none cursor-auto;
+}
+
+li.page-item.active {
+  @apply border-blue-700;
+}
+
+li.page-item.active .page-link {
+  @apply bg-blue-700 text-white;
+}
+
+/* Styles for Menu */
+.nav-menu.level-0 .item {
+  @apply pb-3;
+}
+
+.nav-menu.level-1 .item {
+  @apply pb-2 border-l-2 border-gray-300;
+}
+
+.nav-menu.level-2 .item {
+  @apply pb-1 border-0;
+}
+
+.nav-menu a {
+  @apply block w-full md:w-auto md:min-w-48 md:max-w-96 pr-8 hover:text-white hover:bg-blue-700;
+}
+
+.nav-menu.level-0 a {
+  @apply text-lg;
+}
+
+.nav-menu.level-1 a {
+  @apply text-base pl-5;
+}
+
+.nav-menu.level-2 a {
+  @apply text-sm pl-9;
+}
+
+.nav-menu.level-1 a.active {
+  @apply pl-4 border-l-4 border-orange-600;
+}
+
+.nav-menu.level-2 a.active {
+  @apply pl-8 border-l-4 border-orange-600;
+}
+
+.nav-menu header {
+  @apply w-full flex items-end;
+}
+
+.nav-menu header a {
+  @apply grow pr-0;
+}
+
+.nav-menu button {
+  @apply flex-none w-5 h-5 m-1 bg-[url('/images/arrow-down.svg')] bg-cover;
+}
+
+.nav-menu button.expanded {
+  @apply bg-[url('/images/arrow-up.svg')];
+}
+
+.languages:hover .menu {
+  @apply block;
+}
+
+pre {
+  @apply text-gray-900 !important;
+}
+
+#TableOfContents {
+  @apply my-8;
+}
+
+/* Fix overflow issue when highlight codes with lineNos=table */
+.highlight div {
+  @apply overflow-x-auto;
+}
+
+/* For section shortcode */
+.flex-section {
+  @apply flex flex-wrap;
+}
+
+.row-section {
+  @apply flex-row;
+}
+
+.col-section {
+  @apply flex-col;
+}
+
+.section-justify-start {
+  @apply justify-start;
+}
+
+.section-justify-center {
+  @apply justify-center;
+}
+
+.section-justify-end {
+  @apply justify-end;
+}
+
+.section-items-start {
+  @apply items-start;
+}
+
+.section-items-center {
+  @apply items-center;
+}
+
+.section-items-end {
+  @apply items-end;
+}
+
+.section-bg-image {
+  @apply bg-center bg-cover bg-no-repeat;
+}
+
+.section-grow-0 {
+  @apply grow-0;
+}
+
+.section-grow-1 {
+  @apply grow;
+}
+
+.play-button {
+  @apply inline-block rounded-md font-semibold text-center;
+}

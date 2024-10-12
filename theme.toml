@@ -1,0 +1,18 @@
+name = "jingplay/build-your-website"
+license = "MIT"
+licenselink = "https://github.com/jingplay/build-your-website/blob/main/LICENSE"
+description = "Generate your website from a Markdown content directory tree"
+
+# The home page of the theme, where the source can be found.
+homepage = "https://github.com/jingplay/build-your-website"
+
+# If you have a running demo of the theme.
+demosite = "https://jingplay.com/build-your-website-demo"
+
+tags = ["Docs", "Multilingual", "Responsive"]
+features = ["Simple, clean and content-focused design", "Zero configuration almost", "Search support with Lunr.js", "Multilingual support"]
+
+# If the theme has a single author
+[author]
+    name = "Jing Play"
+    homepage = "https://jingplay.com/"

@@ -1,0 +1,16 @@
+{{- $curNode := . }}
+{{- $nodes := slice }}
+
+{{- range split .RelPermalink "/" }}
+  {{- if $curNode.IsHome }}
+    {{- break }}
+  {{- end }}
+  {{- $curNode = $curNode.Parent }}
+  {{- $nodes = $nodes | append (dict "title" $curNode.LinkTitle "path" $curNode.RelPermalink) }}
+{{- end }}
+
+<nav class="flex flex-wrap py-1 mb-3 border-b border-gray-200 items-center">
+{{- range collections.Reverse $nodes }}
+  <a href="{{ index . "path" }}" class="inline-block text-blue-700 mx-1 px-1">{{ index . "title" }}</a><span class="inline-block">/</span>
+{{- end }}
+</nav>

@@ -1,0 +1,25 @@
+{{- define "main" }}
+        {{- $type := .Type }}
+        {{- $pages := partial "regular_pages.html" . }}
+        {{- if (eq $type "series") }}
+          {{- $pages = $pages.ByParam "Sn" }}
+        {{- end }}
+        <div class="prose !max-w-none">
+          <h1>{{ .Title }}</h1>
+          {{- partial "indent.html" (slice 10 .Content) }}
+
+          {{- range (.Paginate $pages).Pages -}}
+          <section class="mt-8">
+            {{- $title := .Title }}
+            {{- if and (eq $type "series") .Params.Series }}
+              {{- with .Params.Sn }}
+                {{- $title = printf "%s. %s" . $title }}
+              {{- end }}
+            {{- end }}
+            <h3><a href="{{ .RelPermalink }}">{{ $title }}</a></h3>
+            <p>{{ .Summary | plainify  }} <span class="text-sm italic">[ {{ .Params.Date | time.Format ":date_long" }} ]</span></p>
+          </section>
+          {{- end }}
+          {{- template "_internal/pagination.html" . }}
+        </div>
+{{- end }}

@@ -1,0 +1,7 @@
+{{- $results := where .RegularPages "Params.MenuItem" "ne" false }}
+
+{{- range where .Sections "Params.MenuItem" "ne" false }}
+  {{- $results = $results | append (partial "regular_pages.html" .) }}
+{{- end }}
+
+{{- return (sort $results.ByDate.Reverse "Weight" "desc") }}

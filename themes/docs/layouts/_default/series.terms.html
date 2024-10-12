@@ -1,0 +1,12 @@
+{{- define "main" }}
+        <div class="prose !max-w-none">
+          <h1>{{ .Title }}</h1>
+          {{- partial "indent.html" (slice 10 .Content) }}
+          {{- range .Data.Terms.Alphabetical }}
+          <div class="mt-5">
+            <a href="{{ .Page.Permalink }}">{{ .Page.Title }}</a>
+            <span>[{{ .Count }}]</span>
+          </div>
+          {{- end }}
+        </div>
+{{- end }}

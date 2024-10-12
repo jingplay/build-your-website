@@ -1,0 +1,12 @@
+{
+  "results": [
+    {{- range $index, $page := (where .Site.Pages "Params.Indexable" "ne" false) }}
+    {{- if $index -}} , {{- end }}
+    {
+      "href": {{ .RelPermalink | jsonify }},
+      "title": {{ .Title | jsonify }},
+      "summary": {{ .Summary | plainify | jsonify }}
+    }
+    {{- end }}
+  ]
+}

@@ -1,0 +1,57 @@
+title: "Demo"
+theme: "docs"
+
+paginate: 10
+
+params:
+  siteLogo: logo.svg
+  description: "A website to record and share knowledge I'm learning."
+  keywords: "Technology, Tutorial, Learning English, Programming, C++, Python, Linux, Hardware, CPU, GPU, Embedded"
+  author: "Jing"
+
+  disableToc: false
+
+  menu:
+    expandAll: true
+    maxLevel: 2   # Available value is 1-3
+    maxPages: 10  # Maximum pages to show in the menu, the value is 10 by default
+
+baseURL: "http://localhost:1313/"
+
+defaultContentLanguage: "en"
+defaultContentLanguageInSubdir: false
+
+languages:
+  en:
+    contentDir: "content/en"
+    disabled: false
+    languageCode: "en-us"
+    languageDirection: "ltr"
+    languageName: "English"
+    weight: 1
+  zh:
+    contentDir: "content/zh"
+    disabled: true
+    languageCode: "zh-cn"
+    languageDirection: "ltr"
+    languageName: "简体中文"
+    weight: 2
+
+markup:
+  highlight:
+    lineNos: false
+    style: github
+
+  tableOfContents:
+    startLevel: 2
+    endLevel: 3
+    ordered: false
+
+services:
+  disqus:
+    shortname:
+  googleAnalytics:
+    ID:
+
+taxonomies:
+  series: "series"

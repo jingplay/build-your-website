@@ -1,0 +1,17 @@
+<div class="flex items-center w-full py-1">
+  <div class="grow flex items-center ml-3">
+    <img src="{{ printf `images/%s` .Site.Params.SiteLogo | relURL }}" class="w-10 h-10 flex-none">
+    <a href="{{ .Site.Home.RelPermalink }}" class="ml-3 flex-none text-3xl font-semibold">{{ .Site.Title }}</a>
+  </div>
+  {{- partial "indent.html" (slice 2 (partial "languages.html" .)) }}
+  <a href="{{ `search/` | relLangURL }}" class="flex-none mx-3 w-6 h-6">
+    <svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+      <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+    </svg>
+  </a>
+  <div class="flex-none mr-3">
+    <button class="button-menu-toggle px-2 py-1 border rounded text-gray-900 border-gray-300 hover:text-blue-700">
+      <svg class="fill-current h-5 w-5 pointer-events-none" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg>
+    </button>
+  </div>
+</div>

@@ -1,0 +1,16 @@
+{{- define "main" }}
+        <div class="prose !max-w-none">
+          <h1>{{ .Title }}</h1>
+          <p>
+            {{- .Params.Date | time.Format ":date_long" }}
+            {{- with .Params.Series -}}
+            <span class="ml-2"><a href="{{ printf `series/%s` (replace (lower .) ` ` `-`) | relLangURL }}">[{{ . }}]</a></span>
+            {{- end -}}
+          </p>
+          {{- if (and (and (not .Site.Params.DisableToc) .Params.Toc) (ne .TableOfContents `<nav id="TableOfContents"></nav>`)) }}
+            {{- partial "indent.html" (slice 10 .TableOfContents) }}
+          {{- end }}
+          {{- partial "indent.html" (slice 10 .Content) }}
+        </div>
+        {{- partial "indent.html" (slice 8 (partial "comments.html" .)) }}
+{{- end }}

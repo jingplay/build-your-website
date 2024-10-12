@@ -1,0 +1,105 @@
+{{- $curNode := index . 0 }}
+{{- $curPageUrl := index . 1 }}
+{{- $level := len (split (trim (substr $curNode.RelPermalink (len $curNode.Site.LanguagePrefix)) "/") "/") }}
+
+{{- $maxLevel := math.Min 3 (default 3 $curNode.Site.Params.Menu.MaxLevel) }}
+
+{{- $active := "" }}
+{{- if (gt $level 1) }}
+  {{- if (eq $level $maxLevel) }}
+    {{- if (hasPrefix $curPageUrl $curNode.RelPermalink) }}
+      {{- $active = " active" }}
+    {{- end }}
+  {{- else if (eq $curPageUrl $curNode.RelPermalink) }}
+    {{- $active = " active" }}
+  {{- end }}
+{{- end }}
+
+{{- if (eq $curNode.Params.MenuItem false) }}
+{{- else if (or (eq $curNode.Kind "page") (eq $curNode.Kind "taxonomy")) -}}
+
+<a href="{{ $curNode.RelPermalink }}" class="item{{ $active }}">
+    {{- if and (eq $level 1) (hasPrefix $curPageUrl $curNode.RelPermalink) -}}
+      <strong>{{ $curNode.LinkTitle }}</strong>
+    {{- else }}
+      {{- $curNode.LinkTitle }}
+    {{- end }}
+</a>
+
+{{- else if $curNode.IsHome -}}
+
+<a href="{{ $curNode.RelPermalink }}" class="item">
+  {{- if (eq $curNode.RelPermalink $curPageUrl) -}}
+    <strong>{{ $curNode.LinkTitle }}</strong>
+  {{- else }}
+    {{- $curNode.LinkTitle }}
+  {{- end -}}
+</a>
+{{- $pages := $curNode.RegularPages }}
+{{- $pages = $pages | append $curNode.Sections }}
+
+{{- range $curNode.Site.Taxonomies }}
+  {{- if (len .) }}
+    {{- $pages = $pages | append .Page }}
+  {{- end }}
+{{- end }}
+
+{{- $pages = sort $pages.ByTitle "Weight" "desc" }}
+
+{{- range $pages }}
+{{ partial "directory_tree.html" (slice . $curPageUrl) }}
+{{- end -}}
+
+{{- else if (eq $curNode.Kind "section") -}}
+
+{{- if (ge $level $maxLevel) -}}
+<a href="{{ $curNode.RelPermalink }}" class="item{{ $active }}">
+  {{- if and (eq $level 1) (hasPrefix $curPageUrl $curNode.RelPermalink) -}}
+    <strong>{{ $curNode.LinkTitle }}</strong>
+  {{- else }}
+    {{- $curNode.LinkTitle }}
+  {{- end }}
+</a>
+{{- else }}
+
+{{- $hidden := "" }}
+{{- $btnState := " expanded" }}
+{{- if (and (eq $level 1) (not $curNode.Site.Params.Menu.ExpandAll)) }}
+  {{- $hidden = " hidden" }}
+  {{- $btnState = "" }}
+{{- end -}}
+
+<div class="item">
+  {{- if (eq $level 1) }}
+  <header><a href="{{ $curNode.RelPermalink }}">
+    {{- if (hasPrefix $curPageUrl $curNode.RelPermalink) -}}
+      <strong>{{ $curNode.LinkTitle }}</strong>
+    {{- else }}
+      {{- $curNode.LinkTitle }}
+    {{- end -}}
+  </a><button class="button-expand{{ $btnState }}">&nbsp;</button></header>
+  {{- else }}
+    {{- if (ne $active "") }}
+  <a href="{{ $curNode.RelPermalink }}" class="active">{{ $curNode.LinkTitle }}</a>
+    {{- else }}
+  <a href="{{ $curNode.RelPermalink }}">{{ $curNode.LinkTitle }}</a>
+    {{- end }}
+  {{- end }}
+  <div class="nav-menu {{- $hidden }} level-{{ $level }}">
+    {{- $maxPages := default 10 $curNode.Site.Params.Menu.MaxPages }}
+    {{- $pages := sort (sort $curNode.RegularPages.ByTitle "Date" "desc") "Weight" "desc" }}
+    {{- $pages = first $maxPages $pages }}
+    {{- $pages = ($pages | append (sort $curNode.Sections.ByTitle "Weight" "desc")) }}
+
+    {{- range $pages }}
+      {{- partial "indent.html" (slice 4 (partial "directory_tree.html" (slice . $curPageUrl))) }}
+    {{- end }}
+
+    {{- if (gt (len $curNode.RegularPages) $maxPages) }}
+    <a href="{{ $curNode.RelPermalink }}" class="item">{{ i18n "more" }}</a>
+    {{- end }}
+  </div>
+</div>
+{{- end -}}
+
+{{- end }}
