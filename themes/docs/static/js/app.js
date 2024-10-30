@@ -9,19 +9,19 @@ document.addEventListener('DOMContentLoaded', () => {
     evt.target.classList.add('hidden')
   })
 
-  const btnExpandAll = document.querySelector('.button-expand-all')
-  btnExpandAll && btnExpandAll.addEventListener('click', (evt) => {
-    const img = evt.target
+  const btnsExpandAll = document.querySelectorAll('.btn-expand-all')
+  btnsExpandAll && btnsExpandAll.forEach((btnExpandAll) => {
+    btnExpandAll.addEventListener('click', () => {
     const menus = document.querySelectorAll('.nav-menu.level-1')
     const btns = document.querySelectorAll('.button-expand')
-    if (img.classList.contains('expanded')) {
+      const btnEx = document.querySelector('.btn-expand-all.expand')
+      if (btnEx.classList.contains('hidden')) {
       menus.forEach((menu) => {
         menu.classList.add('hidden')
       })
       btns.forEach((btn) => {
         btn.classList.remove('expanded')
       })
-      img.src = '/images/expand-all.svg'
     } else {
       menus.forEach((menu) => {
         menu.classList.remove('hidden')
@@ -29,9 +29,11 @@ document.addEventListener('DOMContentLoaded', () => {
       btns.forEach((btn) => {
         btn.classList.add('expanded')
       })
-      img.src = '/images/collapse-all.svg'
     }
-    img.classList.toggle('expanded')
+      btnsExpandAll.forEach((btn) => {
+        btn.classList.toggle('hidden')
+      })
+    })
   })
 
   const btnsExpand = document.querySelectorAll('.button-expand')
